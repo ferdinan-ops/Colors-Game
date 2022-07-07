@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bermain dengan Warna</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+
+        }
+
+        body {
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 90vh;
+            flex-direction: column;
+        }
+
+        a {
+            background-color: white;
+            color: black;
+            margin-top: 50px;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            padding: 14px 28px;
+            border-radius: 10px;
+        }
+
+        .bg-body {
+            background-color: #1BC6B4;
+        }
+
+        .kotak {
+            width: 25px;
+            height: 25px;
+            margin: 10px auto;
+        }
+
+        .merah {
+            background-color: red;
+        }
+
+        .hijau {
+            background-color: green;
+        }
+
+        .biru {
+            background-color: blue;
+        }
+
+        .container,
+        .kode-program {
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            padding: 16px 64px;
+            border-radius: 18px;
+            background-color: white;
+        }
+
+        .container>* {
+            margin: 10px auto;
+        }
+
+        .container button {
+            margin: 10px;
+            outline: none;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-weight: 500;
+        }
+
+        pre {
+            background-color: #d2d3db;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            text-align: left;
+            padding: 12px;
+            margin: 20px 0 40px 0;
+            border-radius: 10px;
+        }
+
+        .tampil {
+            display: none;
+        }
+
+        .container button:nth-child(2) {
+            background-color: #6E85B7;
+        }
+
+        .container button:nth-child(3) {
+            background-color: #F4E06D;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Bermain dengan Warna</h1>
+        <button type="button" id="btnWarna">Buat Warna</button>
+
+        <!-- slider Warna -->
+        <div class="kotak merah"></div>
+        <input type="range" name="sMerah" id="" min="0" max="255">
+        <!-- kita dapat menambah nilai min dan max pada range -->
+
+        <div class="kotak hijau"></div>
+        <input type="range" name="sHijau" id="" min="0" max="255">
+        <!-- kita dapat menambah nilai min dan max pada range -->
+
+        <div class="kotak biru"></div>
+        <input type="range" name="sBiru" id="" min="0" max="255">
+        <!-- kita dapat menambah nilai min dan max pada range -->
+    </div>
+    <a href="#">Kode Program</a>
+
+    <div class="kode-program tampil">
+        <h4>Ubah Warna</h4>
+        <pre>
+const btnWarna = document.querySelector("#btnWarna");
+
+btnWarna.addEventListener("click", function () {
+    // khusus utk body tidak perlu ditangkap
+    // document.body.style.backgroundColor = "#1BC6B4";
+
+    // membuat tombol saat diklik berubah warna jadi biru dan putih satt diklik lagi
+    document.body.classList.toggle("bg-body");
+});</pre>
+
+        <h4>Acak Warna</h4>
+        <pre>
+// buat button baru untuk random warna
+const btnRandom = document.createElement("button");
+const teksBtnRandom = document.createTextNode("Acak Warna");
+
+// meletakkan btnRandom setelah btnWarna
+btnRandom.appendChild(teksBtnRandom);
+btnWarna.after(btnRandom);
+btnRandom.setAttribute("type", "button");
+
+btnRandom.addEventListener("click", function () {
+    // acak warna dengan method Math
+    // round => membulatkan, ceil => bulat atas, floor => bulat atas
+    const r = Math.round(Math.random() * 255 + 1); // membuat angka acak sampai 255
+    const g = Math.round(Math.random() * 255 + 1); // membuat angka acak sampai 255
+    const b = Math.round(Math.random() * 255 + 1); // membuat angka acak sampai 255
+
+    document.body.style.backgroundColor = `rgb(${r},${g},${b})`;
+});</pre>
+
+        <h4>Slider Warna</h4>
+        <pre>
+const sMerah = document.querySelector("input[name=sMerah]");
+const sHijau = document.querySelector("input[name=sHijau]");
+const sBiru = document.querySelector("input[name=sBiru]");
+
+// event input => real time, event change => tunggu dilepas dulu
+sMerah.addEventListener("input", function () {
+    const r = sMerah.value; // mengambil value dari range dari 0 - 255 tidak acak tp sesuai range
+
+    // kotak warna
+    const merah = document.getElementsByClassName("merah")[0];
+    merah.style.backgroundColor = `rgb(${r},0,0)`;
+    sMerah.style.accentColor = `rgb(${r},0,0)`;
+
+    document.body.style.backgroundColor = `rgb(${r},0,0)`;
+});
+
+
+sHijau.addEventListener("input", function () {
+    const r = sMerah.value;
+    const g = sHijau.value;
+
+    const hijau = document.getElementsByClassName("hijau")[0];
+    hijau.style.backgroundColor = `rgb(0,${g},0)`;
+    sHijau.style.accentColor = `rgb(0,${g},0)`;
+
+    document.body.style.backgroundColor = `rgb(${r},${g},0)`;
+});
+
+sBiru.addEventListener("input", function () {
+    const r = sMerah.value;
+    const g = sHijau.value;
+    const b = sBiru.value;
+
+    const biru = document.getElementsByClassName("biru")[0];
+    biru.style.backgroundColor = `rgb(0,0,${b})`;
+    sBiru.style.accentColor = `rgb(0,0,${b})`;
+
+    document.body.style.backgroundColor = `rgb(${r},${g},${b})`;
+});</pre>
+
+        <h4>Mouse Move Acak Warna</h4>
+        <pre>
+// ubah warna saat mouse digerakkan
+document.body.addEventListener("mousemove", function (e) {
+    // method untuk mengambil nilai lokasi cursor => object.clientX & object.clientY
+    // console.log(e.clientX);
+
+    // method untuk mengetahui ukuran window/browser
+    // console.log(window.innerWidth);
+
+    const posisiX = Math.round((e.clientX / window.innerWidth) * 255);
+    const posisiY = Math.round((e.clientY / window.innerWidth) * 255);
+
+    document.body.style.backgroundColor = `rgb(${posisiX},${posisiY},100)`;
+});</pre>
+    </div>
+
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
